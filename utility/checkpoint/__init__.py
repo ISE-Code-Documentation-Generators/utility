@@ -1,2 +1,1 @@
-from .interface import CheckpointInterface
-from .model_checkpoint import get_model_checkpoint
+from .interface import CheckpointInterface, get_model_checkpoint

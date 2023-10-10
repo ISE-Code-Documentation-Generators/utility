@@ -37,8 +37,3 @@ class ModelCheckpointHandler(CheckpointInterface):
         checkpoint = self.ModelCheckpoint(**torch.load(self.filename))
         self.model.load_state_dict(checkpoint.model)
         self.optimizer.load_state_dict(checkpoint.optimizer)
-
-
-
-def get_model_checkpoint(model: nn.Module, optimizer: optim.Optimizer, filename: str) -> CheckpointInterface:
-    return ModelCheckpointHandler(model, optimizer, filename)
