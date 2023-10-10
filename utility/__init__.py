@@ -1,2 +1,2 @@
-from device import to_device
-from checkpoint import *
+from .device import to_device
+from .checkpoint import *
