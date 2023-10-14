@@ -5,7 +5,7 @@ import torch
 from torch import nn
 from torch import optim
 
-from utility.checkpoint import CheckpointInterface
+from ise_cdg_utility.checkpoint import CheckpointInterface
 
 
 

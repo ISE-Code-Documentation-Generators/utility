@@ -18,5 +18,5 @@ class CheckpointInterface(abc.ABC):
 
 
 def get_model_checkpoint(model: nn.Module, optimizer: optim.Optimizer, filename: str) -> CheckpointInterface:
-    from utility.checkpoint.model_checkpoint import ModelCheckpointHandler
+    from ise_cdg_utility.checkpoint.model_checkpoint import ModelCheckpointHandler
     return ModelCheckpointHandler(model, optimizer, filename)
