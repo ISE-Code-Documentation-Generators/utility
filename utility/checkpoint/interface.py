@@ -3,8 +3,6 @@ import abc
 from torch import nn
 from torch import optim
 
-from utility.checkpoint import CheckpointInterface
-
 
 
 class CheckpointInterface(abc.ABC):

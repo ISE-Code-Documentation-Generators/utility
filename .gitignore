@@ -530,3 +530,4 @@ MigrationBackup/
 
 # for the sake of the package
 requirements.txt
+main.py
