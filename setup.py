@@ -7,7 +7,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 DESCRIPTION = 'To be added in the future'
 
 
@@ -23,6 +23,7 @@ setuptools.setup(
     include_package_data=True, 
     install_requires=[
         'torch>=2.0.0',
+        'torchtext>=0.15.0',
     ],
     classifiers=[
         "Intended Audience :: Science/Research",
