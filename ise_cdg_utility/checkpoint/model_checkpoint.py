@@ -60,7 +60,7 @@ class InOutModelCheckpointHandler(BaseModelCheckpointHandler):
         self.out_filename = out_filename
 
     def save_checkpoint(self):
-        self._save_checkpoint(self.in_filename)
+        self._save_checkpoint(self.out_filename)
 
     def load_checkpoint(self):
-        self._load_checkpoint(self.out_filename)
+        self._load_checkpoint(self.in_filename)
