@@ -17,6 +17,8 @@ class CheckpointInterface(abc.ABC):
 
 
 
-def get_model_checkpoint(model: nn.Module, optimizer: optim.Optimizer, filename: str) -> CheckpointInterface:
-    from ise_cdg_utility.checkpoint.model_checkpoint import ModelCheckpointHandler
-    return ModelCheckpointHandler(model, optimizer, filename)
+def get_model_checkpoint(workspace: str, model: nn.Module, optimizer: optim.Optimizer, *args, **kwargs) -> CheckpointInterface:
+    from ise_cdg_utility.checkpoint.model_checkpoint import ModelCheckpointHandler, InOutModelCheckpointHandler
+    if workspace == 'kaggle':
+        return InOutModelCheckpointHandler(model, optimizer, *args, **kwargs)
+    return ModelCheckpointHandler(model, optimizer, *args, **kwargs)
