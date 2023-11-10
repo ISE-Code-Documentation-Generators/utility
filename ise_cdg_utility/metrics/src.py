@@ -31,14 +31,16 @@ class NLPMetricTorchmetrics(NLPMetricInterface, abc.ABC):
             new_candidates.append(' '.join(cand))
         return self.calculate_metric(new_candidates, self.references)
 
-
-class NLPMetricBLEU(NLPMetricTorchmetrics):
-
+class NLPMetricRangedBLEU(NLPMetricTorchmetrics):
     def calculate_metric(self, candidates: List[str], references: List[List[str]]):
-        bleu = BLEUScore()
-        return bleu(candidates, references)
+        n_gram_limit = 4
 
+        metric_dict = dict()
+        for i in range(1, n_gram_limit+1):
+            bleu = BLEUScore(n_gram=i)
+            metric_dict[f"bleu_{i}"] = bleu(candidates, references) 
 
+        return metric_dict
 
 class NLPMetricROUGE(NLPMetricTorchmetrics):
     

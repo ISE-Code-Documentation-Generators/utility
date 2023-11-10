@@ -32,6 +32,6 @@ class VectorizedNLPMetric(abc.ABC):
 
 def get_vectorized_metrics(vocab: vocab.Vocab) -> Tuple[VectorizedNLPMetric, VectorizedNLPMetric]:
     from ise_cdg_utility.metrics.adaptors import VectorizedNLPMetricAdaptor
-    from ise_cdg_utility.metrics.src import NLPMetricBLEU, NLPMetricROUGE
+    from ise_cdg_utility.metrics.src import NLPMetricRangedBLEU, NLPMetricROUGE
 
-    return VectorizedNLPMetricAdaptor(vocab, NLPMetricBLEU()), VectorizedNLPMetricAdaptor(vocab, NLPMetricROUGE())
+    return VectorizedNLPMetricAdaptor(vocab, NLPMetricRangedBLEU()), VectorizedNLPMetricAdaptor(vocab, NLPMetricROUGE())
