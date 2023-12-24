@@ -61,11 +61,6 @@ class ModelCheckpointHandler(BaseModelCheckpointHandler):
     def get_load_filename(self) -> str:
         return self.filename
 
-    def save_checkpoint(self):
-        self._save_checkpoint(self.filename)
-
-    def load_checkpoint(self):
-        self._load_checkpoint(self.filename)
 
 
 class InOutModelCheckpointHandler(BaseModelCheckpointHandler):
