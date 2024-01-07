@@ -1,17 +1,13 @@
 import abc
-from typing import Callable, List, Tuple
+from typing import Dict, List
 from torchtext import vocab
-
-from ise_cdg_utility.metrics.utils import atomic_map
-
+from ise_cdg_utility.metrics.enums import CodeMetric
 
 
 class NLPMetricInterface(abc.ABC):
-
     @abc.abstractmethod
     def set_references(self, references: List[List[List[str]]]) -> None:
         pass
-        
 
     @abc.abstractmethod
     def __call__(self, candidates: List[List[str]]):
@@ -30,8 +26,11 @@ class VectorizedNLPMetric(abc.ABC):
         pass
 
 
-def get_vectorized_metrics(vocab: vocab.Vocab) -> Tuple[VectorizedNLPMetric, VectorizedNLPMetric]:
+def get_vectorized_metrics(vocab: vocab.Vocab) -> Dict[CodeMetric, VectorizedNLPMetric]:
     from ise_cdg_utility.metrics.adaptors import VectorizedNLPMetricAdaptor
     from ise_cdg_utility.metrics.src import NLPMetricRangedBLEU, NLPMetricROUGE
 
-    return VectorizedNLPMetricAdaptor(vocab, NLPMetricRangedBLEU()), VectorizedNLPMetricAdaptor(vocab, NLPMetricROUGE())
+    return {
+        CodeMetric.BLEU: VectorizedNLPMetricAdaptor(vocab, NLPMetricRangedBLEU()),
+        CodeMetric.ROUGE: VectorizedNLPMetricAdaptor(vocab, NLPMetricROUGE()),
+    }
