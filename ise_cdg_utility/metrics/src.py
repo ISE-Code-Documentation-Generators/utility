@@ -50,7 +50,7 @@ class NLPMetricROUGE(NLPMetricTorchmetrics):
         rouge = ROUGEScore()
         return rouge(candidates, references)
 
-class BERTMetric(NLPMetricTorchmetrics):
+class NLPMetricBERT(NLPMetricTorchmetrics):
 
     @classmethod
     def calculate_bert_score(self, sentence1, sentence2) -> torch.Tensor:
