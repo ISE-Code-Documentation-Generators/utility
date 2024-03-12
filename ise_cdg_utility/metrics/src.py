@@ -1,7 +1,9 @@
 import abc
 import typing
 from typing import List, Optional
+import torch
 from torchmetrics.text import BLEUScore, ROUGEScore
+from sentence_transformers import SentenceTransformer, util
 
 from ise_cdg_utility.metrics import NLPMetricInterface
 
@@ -48,3 +50,29 @@ class NLPMetricROUGE(NLPMetricTorchmetrics):
         rouge = ROUGEScore()
         return rouge(candidates, references)
 
+class BERTMetric(NLPMetricTorchmetrics):
+
+    @classmethod
+    def calculate_bert_score(self, sentence1, sentence2) -> torch.Tensor:
+        model = SentenceTransformer('bert-base-uncased')
+        embeddings1 = model.encode(sentence1, convert_to_tensor=True)
+        embeddings2 = model.encode(sentence2, convert_to_tensor=True)
+
+        cosine_similarity = util.pytorch_cos_sim(embeddings1, embeddings2)
+        return cosine_similarity
+
+    def calculate_metric_for_each(self, candidate: str, corresponding_refs: List[str]):
+        results = []
+        for ref in corresponding_refs:
+            results.append(self.calculate_bert_score(candidate, ref))
+        combined_tensor = torch.cat(results, dim=0)
+        max_value, _ = torch.max(combined_tensor, dim=0)
+        return max_value.view(1, 1)
+
+    def calculate_metric(self, candidates: List[str], references: List[List[str]]):
+        scores = []
+        for i, candidate in enumerate(candidates):
+            scores.append(self.calculate_metric_for_each(candidate, references[i]))
+        combined_tensor = torch.cat(scores, dim=0)
+        average_value = torch.mean(combined_tensor, dim=0)
+        return {'bert_score': average_value}
