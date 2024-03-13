@@ -28,9 +28,20 @@ class VectorizedNLPMetric(abc.ABC):
 
 def get_vectorized_metrics(vocab: vocab.Vocab) -> Dict[CodeMetric, VectorizedNLPMetric]:
     from ise_cdg_utility.metrics.adaptors import VectorizedNLPMetricAdaptor
-    from ise_cdg_utility.metrics.src import NLPMetricRangedBLEU, NLPMetricROUGE
+    from ise_cdg_utility.metrics.src import NLPMetricRangedBLEU, NLPMetricROUGE, NLPMetricBERT
 
     return {
         CodeMetric.BLEU: VectorizedNLPMetricAdaptor(vocab, NLPMetricRangedBLEU()),
         CodeMetric.ROUGE: VectorizedNLPMetricAdaptor(vocab, NLPMetricROUGE()),
+        CodeMetric.BERT: VectorizedNLPMetricAdaptor(vocab, NLPMetricBERT())
+    }
+
+
+def get_metrics() -> Dict[CodeMetric, NLPMetricInterface]:
+    from ise_cdg_utility.metrics.src import NLPMetricRangedBLEU, NLPMetricROUGE, NLPMetricBERT
+
+    return {
+        CodeMetric.BLEU: NLPMetricRangedBLEU(),
+        CodeMetric.ROUGE: NLPMetricROUGE(),
+        CodeMetric.BERT: NLPMetricBERT(),
     }
