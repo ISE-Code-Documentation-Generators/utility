@@ -1,1 +1,1 @@
-from .interface import NLPMetricInterface, VectorizedNLPMetric, get_vectorized_metrics, CodeMetric
+from .interface import NLPMetricInterface, VectorizedNLPMetric, get_vectorized_metrics, CodeMetric, get_metrics
