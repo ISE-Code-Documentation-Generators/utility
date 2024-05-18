@@ -53,7 +53,10 @@ class NLPMetricBERT(NLPMetricTorchmetrics):
 
     @classmethod
     def calculate_bert_score(self, sentence1, sentence2) -> torch.Tensor:
-        model = SentenceTransformer()
+        import logging
+        logging.getLogger("sentence_transformers").setLevel(logging.ERROR)
+
+        model = SentenceTransformer('bert-base-uncased')
         embeddings1 = model.encode(sentence1, convert_to_tensor=True)
         embeddings2 = model.encode(sentence2, convert_to_tensor=True)
 

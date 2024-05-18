@@ -17,8 +17,8 @@ class NLPMetricForEachResult(NLPMetricInterface):
     def _calculate_metric_for_one_candidate(
         self, candidate: List[str], reference: List[List[str]]
     ):
-        self.nlp_metric.set_references(reference)
-        return self.nlp_metric(candidate)
+        self.nlp_metric.set_references([reference])
+        return self.nlp_metric([candidate])
 
     def calculate_metric(
         self, candidates: List[List[str]], references: List[List[List[str]]]
