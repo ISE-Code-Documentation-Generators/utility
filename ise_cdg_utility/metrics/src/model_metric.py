@@ -50,6 +50,10 @@ class NLPMetricROUGE(NLPMetricTorchmetrics):
 
 
 class NLPMetricBERT(NLPMetricTorchmetrics):
+    
+    def __init__(self) -> None:
+        super().__init__()
+        self.use_tqdm = True
 
     @classmethod
     def calculate_bert_score(self, sentence1, sentence2) -> torch.Tensor:
@@ -73,7 +77,11 @@ class NLPMetricBERT(NLPMetricTorchmetrics):
 
     def calculate_metric(self, candidates: List[str], references: List[List[str]]):
         scores = []
-        for i, candidate in tqdm(enumerate(candidates)):
+        iterator = enumerate(candidates)
+        if self.use_tqdm:
+            iterator = tqdm(iterator)
+
+        for i, candidate in iterator:
             scores.append(self.calculate_metric_for_each(candidate, references[i]))
         combined_tensor = torch.cat(scores, dim=0)
         average_value = torch.mean(combined_tensor, dim=0)

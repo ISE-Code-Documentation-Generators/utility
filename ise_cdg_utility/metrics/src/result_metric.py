@@ -1,6 +1,8 @@
 import typing
 from typing import List
 
+from tqdm import tqdm
+
 from ise_cdg_utility.metrics import NLPMetricInterface
 
 if typing.TYPE_CHECKING:
@@ -25,7 +27,9 @@ class NLPMetricForEachResult(NLPMetricInterface):
     ):
         N = len(candidates)
         result_list = []
-        for i in range(N):
+        setattr(self.nlp_metric, 'use_tqdm', False)
+
+        for i in tqdm(range(N)):
             candidate: List[str] = candidates[i]
             reference: List[List[str]] = references[i]
             result_list.append(
