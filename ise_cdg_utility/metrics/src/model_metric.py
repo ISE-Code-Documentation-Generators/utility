@@ -57,7 +57,7 @@ class NLPMetricBERT(NLPMetricTorchmetrics):
     def calculate_metric(self, candidates: List[str], references: List[List[str]]):
         P, R, F1 = score(candidates, references, model_type="bert-base-uncased", lang="en", rescale_with_baseline=True)
         return {
-            "BERT_fmeasure": F1,
-            "BERT_precision": P,
-            "BERT_recall": R,
+            "BERT_fmeasure": F1.mean(),
+            "BERT_precision": P.mean(),
+            "BERT_recall": R.mean(),
         }
