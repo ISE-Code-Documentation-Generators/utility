@@ -54,15 +54,15 @@ class NLPMetricBERT(NLPMetricTorchmetrics):
     def __init__(self) -> None:
         super().__init__()
         self.use_tqdm = True
+        self.bert = SentenceTransformer('bert-base-uncased')
 
-    @classmethod
     def calculate_bert_score(self, sentence1, sentence2) -> torch.Tensor:
         import logging
         logging.getLogger("sentence_transformers").setLevel(logging.ERROR)
 
-        model = SentenceTransformer('bert-base-uncased')
-        embeddings1 = model.encode(sentence1, convert_to_tensor=True)
-        embeddings2 = model.encode(sentence2, convert_to_tensor=True)
+        
+        embeddings1 = self.bert.encode(sentence1, convert_to_tensor=True)
+        embeddings2 = self.bert.encode(sentence2, convert_to_tensor=True)
 
         cosine_similarity = util.pytorch_cos_sim(embeddings1, embeddings2)
         return cosine_similarity
